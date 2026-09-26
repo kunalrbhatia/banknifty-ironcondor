@@ -1,0 +1,9 @@
+node_modules
+dist
+.env
+.paper
+.kill-banknifty
+.panic-banknifty
+logs
+data/scrip_master.json
+data/banknifty-position.json

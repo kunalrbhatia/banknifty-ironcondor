@@ -1,0 +1,7 @@
+dist
+node_modules
+coverage
+logs
+data
+.agents
+pnpm-lock.yaml

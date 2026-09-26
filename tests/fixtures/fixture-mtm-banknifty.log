@@ -1,0 +1,4 @@
+2026-10-01 09:30:00 | BANKNIFTY | shortCE=53000@220.00 | shortPE=51000@230.00 | longCE=53800@70.00 | longPE=50200@80.00 | netCredit=9000.00 | unrealizedPnL=0.00 | pctOfSL=0.0 | pctOfPT=0.0
+2026-10-01 11:30:00 | BANKNIFTY | shortCE=53000@200.00 | shortPE=51000@210.00 | longCE=53800@65.00 | longPE=50200@75.00 | netCredit=8100.00 | unrealizedPnL=900.00 | pctOfSL=0.0 | pctOfPT=20.0
+2026-10-01 13:30:00 | BANKNIFTY | shortCE=53000@180.00 | shortPE=51000@190.00 | longCE=53800@60.00 | longPE=50200@70.00 | netCredit=7200.00 | unrealizedPnL=1800.00 | pctOfSL=0.0 | pctOfPT=40.0
+2026-10-01 15:30:00 | BANKNIFTY | shortCE=53000@160.00 | shortPE=51000@170.00 | longCE=53800@55.00 | longPE=50200@65.00 | netCredit=6300.00 | unrealizedPnL=2700.00 | pctOfSL=0.0 | pctOfPT=60.0

@@ -1,0 +1,38 @@
+name: Deploy
+
+on:
+  workflow_run:
+    workflows: ['CI']
+    types:
+      - completed
+    branches: [main, master]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' && (github.event.workflow_run.head_branch == 'main' || github.event.workflow_run.head_branch == 'master') }}
+
+    steps:
+      - name: Deploy to Oracle Cloud via SSH
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.ORACLE_HOST }}
+          username: ${{ secrets.ORACLE_USER }}
+          key: ${{ secrets.ORACLE_SSH_KEY }}
+          passphrase: ${{ secrets.ORACLE_SSH_PASSPHRASE }}
+          script: |
+            source ~/.bashrc 2>/dev/null || true
+            source ~/.profile 2>/dev/null || true
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+            export PNPM_HOME="$HOME/.local/share/pnpm"
+            export PATH="$PNPM_HOME:$NVM_DIR/versions/node/$(ls $NVM_DIR/versions/node 2>/dev/null | tail -n 1)/bin:$PATH"
+            cd ~/monthly-straddle
+            git reset --hard
+            git clean -fd
+            git fetch origin
+            git checkout main 2>/dev/null || git checkout master
+            git reset --hard origin/$(git rev-parse --abbrev-ref HEAD)
+            if command -v pnpm &> /dev/null; then pnpm install --frozen-lockfile; else npx pnpm install --frozen-lockfile; fi
+            if command -v pnpm &> /dev/null; then pnpm build; else npx pnpm build; fi
+            if command -v pm2 &> /dev/null; then pm2 restart ecosystem.config.cjs --env production; else npx pm2 restart ecosystem.config.cjs --env production; fi
