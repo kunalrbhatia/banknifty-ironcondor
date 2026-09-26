@@ -27,7 +27,7 @@ jobs:
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             export PNPM_HOME="$HOME/.local/share/pnpm"
             export PATH="$PNPM_HOME:$NVM_DIR/versions/node/$(ls $NVM_DIR/versions/node 2>/dev/null | tail -n 1)/bin:$PATH"
-            cd ~/monthly-straddle
+            cd ~/banknifty-ironcondor
             git reset --hard
             git clean -fd
             git fetch origin
