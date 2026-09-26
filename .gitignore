@@ -7,3 +7,4 @@ dist
 logs
 data/scrip_master.json
 data/banknifty-position.json
+analysis/reports/
