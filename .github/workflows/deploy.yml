@@ -36,7 +36,7 @@ jobs:
             git fetch origin
             git checkout main 2>/dev/null || git checkout master
             git reset --hard origin/$(git rev-parse --abbrev-ref HEAD)
-            pnpm install --no-frozen-lockfile
+            pnpm install --no-frozen-lockfile --ignore-scripts
             pnpm exec tsc
             if command -v pm2 &> /dev/null; then
               pm2 restart ecosystem.config.cjs --env production 2>/dev/null || pm2 start ecosystem.config.cjs --env production
