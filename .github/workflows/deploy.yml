@@ -27,6 +27,9 @@ jobs:
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             export PNPM_HOME="$HOME/.local/share/pnpm"
             export PATH="$PNPM_HOME:$NVM_DIR/versions/node/$(ls $NVM_DIR/versions/node 2>/dev/null | tail -n 1)/bin:$PATH"
+            if [ ! -d ~/banknifty-ironcondor ]; then
+              git clone https://github.com/kunalrbhatia/banknifty-ironcondor.git ~/banknifty-ironcondor
+            fi
             cd ~/banknifty-ironcondor
             git reset --hard
             git clean -fd
@@ -35,4 +38,8 @@ jobs:
             git reset --hard origin/$(git rev-parse --abbrev-ref HEAD)
             if command -v pnpm &> /dev/null; then pnpm install --frozen-lockfile; else npx pnpm install --frozen-lockfile; fi
             if command -v pnpm &> /dev/null; then pnpm build; else npx pnpm build; fi
-            if command -v pm2 &> /dev/null; then pm2 restart ecosystem.config.cjs --env production; else npx pm2 restart ecosystem.config.cjs --env production; fi
+            if command -v pm2 &> /dev/null; then
+              pm2 restart ecosystem.config.cjs --env production 2>/dev/null || pm2 start ecosystem.config.cjs --env production
+            else
+              npx pm2 restart ecosystem.config.cjs --env production 2>/dev/null || npx pm2 start ecosystem.config.cjs --env production
+            fi
